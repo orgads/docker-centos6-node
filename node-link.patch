@@ -1,0 +1,26 @@
+From b187313e262cd382b92b0088dad5e2bdd9ed6aca Mon Sep 17 00:00:00 2001
+From: Orgad Shaneh <orgads@gmail.com>
+Date: Mon, 2 Nov 2020 08:06:12 +0200
+Subject: [PATCH] build: fix link with openssl on centos 6
+
+Many products have this error on linkage:
+undefined reference to `clock_gettime`
+---
+ node.gypi | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/node.gypi b/node.gypi
+index dbe1b05cf5..588489320c 100644
+--- a/node.gypi
++++ b/node.gypi
+@@ -369,6 +369,7 @@
+                     '-Wl,--whole-archive,'
+                       '<(obj_dir)/deps/openssl/<(openssl_product)',
+                     '-Wl,--no-whole-archive',
++                    '-lrt',
+                   ],
+                 }],
+                 # openssl.def is based on zlib.def, zlib symbols
+-- 
+2.16.6
+
